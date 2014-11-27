@@ -1,4 +1,4 @@
-pattern-state
-=============
+pattern-state-example
+=====================
 
-Exercise about a pattern state
+Example of pattern state for teaching
