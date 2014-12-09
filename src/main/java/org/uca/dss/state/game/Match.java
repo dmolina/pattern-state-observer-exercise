@@ -30,4 +30,12 @@ public abstract class Match {
 		throw new IllegalStateException();
 	}
 	public abstract String toString();
+	
+	public String getLocalName() {
+		return this.local.getName();
+	}
+	
+	public String getVisitorName() {
+		return this.visitor.getName();
+	}
 }
