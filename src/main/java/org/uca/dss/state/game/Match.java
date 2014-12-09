@@ -1,7 +1,6 @@
 package org.uca.dss.state.game;
 
 import org.joda.time.LocalDate;
-import org.joda.time.LocalDateTime;
 import org.joda.time.LocalTime;
 import org.uca.dss.state.common.Team;
 
