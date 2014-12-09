@@ -12,54 +12,88 @@ import org.uca.dss.state.game.PendingMatch;
 import org.uca.dss.state.game.Tournament;
 
 public class RankingMatchTest {
-	TeamRankings ranking;
+	TeamRankings currentRanking;
+	TeamRankings finalRanking;
+	
 	String local, visitor;
 	Tournament torneo;
 	
 	@Before
 	public void setUp() throws Exception {
-		ranking = new TeamRankings();
+		currentRanking = new TeamRankings();
+		finalRanking = new TeamRankings();
 		LocalDate fecha = new LocalDate(2014, 12, 12);
 		torneo = new Tournament();
 		Team spain = new Team("España");
 		Team france = new Team("Francia");
 		// TODO: Change with new class Match
 		Match partido = new PendingMatch(spain, france, fecha);
-		// TODO: Relationship between ranking and partido		torneo.addMatch(partido);
+		// TODO: Relationship between rankings and partido		torneo.addMatch(partido);
 		torneo.addMatch(partido);
 		local = torneo.getMatch(0).getLocalName();
 		visitor = torneo.getMatch(0).getVisitorName();
 	}
-	
-	private void assertNotchanges() {
-		assertEquals(ranking.getPoints(local), 0);
-		assertEquals(ranking.getPoints(visitor), 0);
-	}
+
 
 	@Test
 	public void testNotChanges() {
-		
-		assertNotchanges();
-		
 		// Init match
 		torneo.startMatch(0);
-		assertNotchanges();
+		testFinalScore(0, 0);
 		Match partido = torneo.getMatch(0);
 		partido.addLocalPoints(3);
-		assertNotchanges();
+		testFinalScore(0, 0);
+		testCurrentScore(3, 0);
+	}
+	
+	
+	private void testCurrentScore(int scoreLocal, int scoreVisitor) {
+		assertEquals(currentRanking.getPoints(local), scoreLocal);
+		assertEquals(currentRanking.getPoints(visitor), scoreVisitor);
+	}
+	
+	private void testFinalScore(int scoreLocal, int scoreVisitor) {
+		assertEquals(finalRanking.getPoints(local), scoreLocal);
+		assertEquals(finalRanking.getPoints(visitor), scoreVisitor);
 	}
 	
 	@Test
-	public void testChangeAtFinish() {
-		assertNotchanges();
+	public void testChangeAtFinish1() {
+		testFinalScore(0, 0);
+		testCurrentScore(0, 0);
 		
 		torneo.startMatch(0);
 		Match partido = torneo.getMatch(0);
 		partido.addLocalPoints(3);
 		torneo.finishMatch(0);
 		
-		assertEquals(ranking.getPoints(local), 3);
-		assertEquals(ranking.getPoints(visitor), 0);
+		testFinalScore(3, 0);
+		testCurrentScore(3, 0);
 	}
-
+	
+	@Test
+	public void testChangeAtFinish2() {
+		testFinalScore(0, 0);
+		
+		torneo.startMatch(0);
+		Match partido = torneo.getMatch(0);
+		partido.addVisitorPoints(3);
+		torneo.finishMatch(0);
+		
+		testFinalScore(0, 3);
+	}
+	
+	@Test
+	public void testChangeAtFinish3() {
+		testFinalScore(0, 0);
+		
+		torneo.startMatch(0);
+		Match partido = torneo.getMatch(0);
+		partido.addVisitorPoints(3);
+		partido.addLocalPoints(3);
+		torneo.finishMatch(0);
+		
+		testFinalScore(1, 1);
+	}
+	
 }
