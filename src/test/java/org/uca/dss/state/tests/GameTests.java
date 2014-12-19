@@ -85,6 +85,15 @@ public class GameTests {
 		partidoFinish.addLocalPoints(3);
 	}
 	
+	@Test(expected=IllegalStateException.class)
+	public void testExceptionState() {
+		torneo.startMatch(0);
+		Match partido = torneo.getMatch(0);			
+		partido.addVisitorPoints(2);
+		torneo.finishMatch(0);		
+		partido.addLocalPoints(3);
+	}
+	
 	
 
 }

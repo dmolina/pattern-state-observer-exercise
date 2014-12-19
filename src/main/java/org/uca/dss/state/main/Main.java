@@ -37,6 +37,7 @@ public class Main {
 		partido.addLocalPoints(4);
 		System.out.println(torneo.getMatch(0));
 		System.out.println(torneo.getMatch(1));
+		torneo.getMatch(0).addLocalPoints(4);
 		
 	}
 
