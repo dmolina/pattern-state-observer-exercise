@@ -48,8 +48,6 @@ public class GameTests {
 		expected1 = "España - Francia : 3 - 1";
 		assertEquals(torneo.getMatch(0).toString(), expected1);
 		
-		partido.addLocalPoints(4);
-		
 		assertEquals(torneo.getMatch(0).toString(), expected1);
 		assertEquals(torneo.getMatch(1).toString(), expected2);
 	}
